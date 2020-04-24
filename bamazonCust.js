@@ -103,7 +103,7 @@ function order (id, quantity){
             connection.query("UPDATE products SET Quantity = Quantity -" + quantity + " Where ID =" + id)
             complete()
         }else{
-            console.log("Sorry,  insuffician quantity :(")
+            console.log("Sorry,  insufficient quantity :(")
             display()
         }
 
