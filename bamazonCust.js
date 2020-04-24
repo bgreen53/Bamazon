@@ -18,6 +18,7 @@ connection.connect(function (err){
 });
 
 var selItem = ""
+var total = 0
 
 function display(){
     var query = "SELECT ID,Name,Department,Price FROM products";
@@ -81,18 +82,53 @@ function quantity(){
         type: "number",
         message: "How many would you like?"
     }).then(function(answer){ 
-        var query = "SELECT Name,Department,Price FROM products WHERE ?";
-        connection.query(query,{ID:parseFloat(selItem)}, function(err, res){
-            if (err) throw err;
-            
-          
-           console.table(res)
-           correct()
+       
+        var quanReq = answer.quantity
+        order(selItem, quanReq)
+
        
     })
 
-})
+}
 
+function order (id, quantity){
+    var query = "SELECT * FROM products WHERE ?";
+    connection.query(query,{ID: id}, function(err, res){
+        if (err) throw err
+
+        if(quantity <= res[0].Quantity){
+            
+            total = total + (res[0].Price * quantity)
+            console.log ( "Your total is " + "$" + total )
+            connection.query("UPDATE products SET Quantity = Quantity -" + quantity + " Where ID =" + id)
+            complete()
+        }else{
+            console.log("Sorry,  insuffician quantity :(")
+            display()
+        }
+
+
+    })
+
+
+}
+
+function complete (){
+    inquirer
+    .prompt({
+        name:"complete",
+        type:"confirm",
+        message:"Does this complete your order"
+
+    }).then(function (answer){
+        if (answer.complete===true){
+            console.log("Thank you! Have a great day!")
+            connection.end()
+        }else{
+            display()
+        }
+
+    })
 }
 
 
