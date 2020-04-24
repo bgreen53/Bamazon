@@ -25,7 +25,7 @@ Bamazon is a  CLI shopping application that allows a user to see a list off avai
 ![Results](/images/oos.jpg)
 
 
-**If this completes they order customer is thanked and the transaction is ended. If the customer wishes to continue they will return to the list of items **
+**If this completes they order customer is thanked and the transaction is ended. If the customer wishes to continue they will return to the list of items**
 
 ![Results](/images/ordercomplete.jpg)
 
